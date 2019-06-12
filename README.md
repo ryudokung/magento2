@@ -57,7 +57,7 @@ code folder : please put source code in it
 
 
 ***container no.4 for php-fpm***
-version php:7.0.10-fpm
+version php:7.1.3-fpm
 port: 9000
 customized.ini : this file for extend php-fpm configurable
 code folder : please put source code in it
