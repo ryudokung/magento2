@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.6
+    volumes:
+      - "./database/mysql56/data:/var/lib/mysql"
+      - "./database/mysql56/init:/docker-entrypoint-initdb.d"
+      - "./database/mysql56/mysql/conf.d:/etc/mysql/conf.d"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: magento2
+      MYSQL_DATABASE: magento2
+      MYSQL_USER: magento2
+      MYSQL_PASSWORD: magento2
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:4.0
+    ports:
+      - "6379:6379"       
+
+  nginx:
+    depends_on:
+      - db
+      - fpm
+      - redis
+    image: nginx:1.12.2
+    volumes:
+      - "./webserver/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./code:/var/www/html"
+    links:
+      - db
+      - fpm
+      - redis
+    ports:
+      - "80:80"
+    restart: always
+
+  fpm:
+    build: ./webserver/php70
+    ports: 
+      - "9000:9000"
+    volumes:
+      - "./code:/var/www/html"

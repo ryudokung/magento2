@@ -62,3 +62,4 @@ port: 9000
 customized.ini : this file for extend php-fpm configurable
 code folder : please put source code in it
 # magento2
+Issue with fetching http://deb.debian.org/debian/dists/jessie-updates/InRelease with docker
